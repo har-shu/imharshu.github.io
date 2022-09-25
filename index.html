@@ -1,0 +1,200 @@
+<html ng-app>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  #navbar{
+    height:40px;
+    background-color: rgb(75, 76, 77);
+    width:100%;
+    top:0;
+    left:0;
+    position: fixed;
+    color: rgb(96, 215, 96);
+    display: flex;
+  }
+#i1{
+    height:30px;
+    width:30px;
+    margin-left: 550px;
+    margin-top:5px;
+    }
+    h3{
+        margin-top: 7px;
+        position: relative;
+        margin-left: 15px;
+        transform: scale(1);
+        font-family: 'Open Sans', sans-serif;
+    }
+    .con2{
+        margin-top: 80px;
+        margin-left:200px;
+        height:50px;
+    }
+    #select{
+        margin-left: 580px;
+        width:127px;
+        padding:3px;   
+        font-size: 12px;
+        margin-top:-20px;
+        border-color: white;
+        background-color: rgb(238, 238, 238);
+          color: rgb(73, 72, 72);         
+        border-radius: 1px;
+        box-shadow:  1px 1px 1px rgb(181, 181, 181) inset;
+    }
+    select option{
+        background-color:rgba(0, 0, 0, 0.3);
+        
+    }
+    .c1{
+        height:250px;
+        background-color: rgb(174, 167, 167);
+        width:400px;
+        margin-left: 180px;
+        margin-top: 180px;
+        font-size: 3rem;
+        background-color: white;
+        box-shadow: 2px 2px 8px 5px rgb(198, 197, 197);
+        border-radius: 3px;
+        border-color: white;
+        color:rgb(37, 37, 58);
+    }
+    .c3{
+        height:250px;
+        background-color: rgb(174, 167, 167);
+        width:400px;
+        margin-left: 700px;
+        margin-top:-250px;
+        font-size: 3rem;
+        background-color: white;
+        box-shadow: 2px 2px 8px 5px rgb(198, 197, 197);
+        border-radius: 3px;
+        border-color: white;
+        color:rgb(37, 37, 58);
+       
+    }
+   #cipher-text{
+    margin-top: 20px;
+    width: 300px;
+    height:150px;
+    margin-left: 50px;
+    box-shadow: 1px 1px 1px 1px inset rgb(198, 197, 197);
+  border-radius: 4px;
+  border: none;
+  
+   }
+   cipher-text:active{
+    border-bottom: rgb(16, 16, 56);
+
+   }
+   #plain-text{
+    margin-top: 20px;
+    width: 300px;
+    height:150px;
+    margin-left: 50px;
+    box-shadow: 1px 1px 1px 1px inset rgb(198, 197, 197);
+  border-radius: 4px;
+  align-items: center;
+  border:none;
+   }
+   #cipher-text:active{
+    border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  background-color: #eee;
+    
+   }
+  
+</style>
+<body>
+    <div id="navbar">
+        <img id="i1" src="hi.png" alt="logo">
+        <h3>Caesar's Cipher</h3>
+
+    </div>
+    <div class="con2"></div>
+        <select  name="val" id="select">
+        <option value="none" selected disabled hidden>Enter shift amount</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        </select>
+    </div>
+    <div class="c4">
+       <div class="c1">
+            <label for="PlainText" id="pt">PlainText</label>
+            <textarea type="text" id="plain-text" placeholder="enter plain text" ></textarea>
+        </div>
+        <div class="c3">
+            <label for="CipherText" id="ct">CipherText</label>
+            <textarea type="text" id="cipher-text" placeholder="encrypted text appear" ></textarea>
+        </div>
+    </div>
+    
+<script>
+   
+    let pInput=document.getElementById('plain-text')
+    let eInput=document.getElementById('cipher-text')
+    let shiftinput=document.getElementById('select')
+    let inputs=[eInput,pInput]
+    inputs.forEach(input=>{
+        input.oninput=()=>{
+            input.value=input.value.toUpperCase()
+        }
+    })
+    document.getElementById('plain-text').onkeyup=function(){encrypt()};
+    function encrypt(){
+        let pInput=document.getElementById('plain-text').value;
+        let solved=''
+        let shiftinput=parseInt(document.getElementById('select').value)
+        for (var i=0;i<pInput.length;i++){
+            let ascii_val=pInput[i].charCodeAt()
+            let sum=ascii_val+shiftinput
+            sum>=65 && sum<=90?solved+=String.fromCharCode(sum): sum>90?solved+=String.fromCharCode(65+(sum & 91)):solved += pInput; 
+        }
+        eInput.value=solved
+        eInput.document.write(solved.value)
+
+
+        
+    }
+    document.getElementById('cipher-text').onkeyup=function(){decrypt()};
+    
+    function decrypt(){
+        let eInput=document.getElementById('cipher-text').value;
+        let solved=''
+        let shiftinput=parseInt(document.getElementById('select').value)
+        for (var i=0;i<eInput.length;i++){
+            let ascii_val=eInput[i].charCodeAt()
+            let sum=ascii_val-shiftinput
+            sum>=65 && sum<=90?solved+=String.fromCharCode(sum): sum>90?solved+=String.fromCharCode(65+(sum & 91)):solved += pInput; 
+        }
+        pInput.value=solved
+        pInput.document.write(solved.value)
+
+    }
+   
+   
+
+
+    
+   
+
+</script>
+   
+</body>
+</html>
